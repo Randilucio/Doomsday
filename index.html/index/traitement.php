@@ -12,7 +12,7 @@ $loisirs = $_POST['loisirs'] ?? [];
 $animaux = htmlspecialchars(trim($_POST['animaux'] ?? ''));
 
 $erreurs = [];
-$villes_autorisees = ['Paris', 'Lyon', 'Marseille'];
+$villes_autorisees = ['Paris', 'Lyon', 'Marseille','Nantes','Toulouse','Grenoble'];
 $sexe_autorise = ['H', 'F'];
 
 if (strlen($nom) < 2 || strlen($nom) > 50) {
