@@ -1,7 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: index.html');
-    exit;
+    echo 'Not allowed if not method POST';
 }
 
 $nom = htmlspecialchars(trim($_POST['nom'] ?? ''));
@@ -60,7 +59,7 @@ $resultats = array_filter($profils, function($p) use ($sexe, $ville, $loisirs) {
 
 echo "<h2>Résultats de la recherche :</h2>";
 if (empty($resultats)) {
-    echo "Aucun profil ne correspond à vos critères.";
+    echo "Sa ne correspond a aucun profil";
 } else {
     echo "<ul>";
     foreach ($resultats as $r) {
