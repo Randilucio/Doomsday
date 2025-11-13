@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+    </head>
+    <body class="container">
+        <h1>Exo</h1>
+        <div class="Formulaire">
+            <form action="traitement.php"method="post">
+                <label for="nom">Nom</label>
+                <input type="text" name="nom" id="name" required minlength="2" class="form-control">
+                <label for="email">email</label>
+                <input type="email" name="email" id="email" required class="form-control">
+                <label for="">mot de passe</label>
+                <input type="password" name="mdp" id="mdp" required maxlength="8" class="form-control">
+                <label for="">ville</label>
+                <input type="text" name="ville" id="city" required class="form-control">
+                <label for="">sexe:</label>
+                <input type="radio" name="sexe" id="homme"  value="homme">
+                <label for="homme">Homme</label>
+                <input type="radio" name="sexe" id="femme" value="femme">
+                <label for="femme">Femme</label>
+                <label for="loisir">loisir</label>
+                <input type="text" name="loisir" id="loisir" minlength="1" class="form-control">
+                <label for="animaux">animaux de compagnie</label>
+                <input type="text" name="animaux" id="animaux" minlength="1" class="form-control"> 
+                <input type="submit" class="mt-3">
+            </form>
+        </div>
+    </body>
+</html>
