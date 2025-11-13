@@ -1,88 +1,71 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    die("<h2>❌ Accès non autorisé. Veuillez utiliser le formulaire.</h2>");
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: index.html');
+    exit;
 }
 
 $nom = htmlspecialchars(trim($_POST['nom'] ?? ''));
 $email = htmlspecialchars(trim($_POST['email'] ?? ''));
-$mdp = htmlspecialchars(trim($_POST['mdp'] ?? ''));
+$password = htmlspecialchars(trim($_POST['password'] ?? ''));
+$sexe = htmlspecialchars(trim($_POST['sexe'] ?? ''));
 $ville = htmlspecialchars(trim($_POST['ville'] ?? ''));
-$sexe = htmlspecialchars($_POST['sexe'] ?? '');
-$loisir = htmlspecialchars(trim($_POST['loisir'] ?? ''));
+$loisirs = $_POST['loisirs'] ?? [];
 $animaux = htmlspecialchars(trim($_POST['animaux'] ?? ''));
 
+$erreurs = [];
+$villes_autorisees = ['Paris', 'Lyon', 'Marseille'];
+$sexe_autorise = ['H', 'F'];
 
-$errors = [];
-
-
-if (strlen($nom) < 2) {
-    $errors[] = "Le nom doit contenir au moins 2 caractères.";
+if (strlen($nom) < 2 || strlen($nom) > 50) {
+    $erreurs[] = "Le nom doit contenir entre 2 et 50 caractères.";
 }
-
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors[] = "L'email n'est pas valide.";
+    $erreurs[] = "Email invalide.";
 }
 
-
-if (strlen($mdp) < 6 || strlen($mdp) > 20) {
-    $errors[] = "Le mot de passe doit comporter entre 6 et 20 caractères.";
+if (strlen($password) < 6) {
+    $erreurs[] = "Le mot de passe doit contenir au moins 6 caractères.";
 }
 
-
-if (strlen($ville) < 2) {
-    $errors[] = "La ville doit comporter au moins 2 caractères.";
+if (!in_array($sexe, $sexe_autorise)) {
+    $erreurs[] = "Sexe invalide.";
 }
 
-
-if (!in_array($sexe, ['homme', 'femme'])) {
-    $errors[] = "Le sexe doit être 'homme' ou 'femme'.";
+if (!in_array($ville, $villes_autorisees)) {
+    $erreurs[] = "Ville invalide.";
 }
 
-
-if (!empty($errors)) {
-    echo "<h2 class='text-danger'>❌ Erreurs dans le formulaire :</h2><ul>";
-    foreach ($errors as $e) {
-        echo "<li>$e</li>";
+if (!empty($erreurs)) {
+    echo "<h2>Erreurs :</h2><ul>";
+    foreach ($erreurs as $erreur) {
+        echo "<li>$erreur</li>";
     }
     echo "</ul>";
-    echo '<a href="index.html" class="btn btn-primary mt-3">Retour au formulaire</a>';
+    echo '<a href="index.html">Retour au formulaire</a>';
     exit;
 }
 
-
-echo "<h1 class='text-success'>✅ Données reçues :</h1>";
-echo "<ul>";
-echo "<li><strong>Nom :</strong> $nom</li>";
-echo "<li><strong>Email :</strong> $email</li>";
-echo "<li><strong>Sexe :</strong> $sexe</li>";
-echo "<li><strong>Ville :</strong> $ville</li>";
-echo "<li><strong>Loisir :</strong> $loisir</li>";
-echo "<li><strong>Animaux :</strong> $animaux</li>";
-echo "</ul>";
-
-
 $profils = [
-    ["nom" => "Dupont", "sexe" => "homme", "ville" => "Paris", "loisir" => "football"],
-    ["nom" => "Durand", "sexe" => "femme", "ville" => "Lyon", "loisir" => "lecture"],
-    ["nom" => "Martin", "sexe" => "homme", "ville" => "Marseille", "loisir" => "natation"],
-    ["nom" => "Bernard", "sexe" => "femme", "ville" => "Paris", "loisir" => "cinéma"],
+    ['nom'=>'Alice', 'sexe'=>'F', 'ville'=>'Paris', 'loisirs'=>['Lecture','Musique']],
+    ['nom'=>'Bob', 'sexe'=>'H', 'ville'=>'Lyon', 'loisirs'=>['Sport']],
+    ['nom'=>'Claire', 'sexe'=>'F', 'ville'=>'Marseille', 'loisirs'=>['Musique','Sport']],
 ];
 
 
-$resultats = array_filter($profils, function ($p) use ($sexe, $ville) {
-    return strtolower($p['sexe']) === strtolower($sexe) && strtolower($p['ville']) === strtolower($ville);
+$resultats = array_filter($profils, function($p) use ($sexe, $ville, $loisirs) {
+    $loisirs_match = empty($loisirs) || count(array_intersect($loisirs, $p['loisirs'])) > 0;
+    return $p['sexe'] === $sexe && $p['ville'] === $ville && $loisirs_match;
 });
 
-
-echo "<h2>🔎 Profils correspondants :</h2>";
-if (count($resultats) > 0) {
+echo "<h2>Résultats de la recherche :</h2>";
+if (empty($resultats)) {
+    echo "Aucun profil ne correspond à vos critères.";
+} else {
     echo "<ul>";
     foreach ($resultats as $r) {
-        echo "<li>{$r['nom']} ({$r['ville']} - {$r['loisir']})</li>";
+        echo "<li>{$r['nom']} ({$r['ville']}) - Loisirs: ".implode(", ", $r['loisirs'])."</li>";
     }
     echo "</ul>";
-} else {
-    echo "<p>Aucun profil trouvé correspondant à vos critères.</p>";
 }
 ?>
