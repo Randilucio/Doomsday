@@ -1,34 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Document</title>
-    </head>
-    <body class="container">
-        <h1>Exo</h1>
-        <div class="Formulaire">
-            <form action="traitement.php"method="post">
-                <label for="nom">Nom</label>
-                <input type="text" name="nom" id="name" required minlength="2" class="form-control">
-                <label for="email">email</label>
-                <input type="email" name="email" id="email" required class="form-control">
-                <label for="">mot de passe</label>
-                <input type="password" name="mdp" id="mdp" required minlength="6" maxlength="20" class="form-control">
-                <label for="">ville</label>
-                <input type="text" name="ville" id="city" required class="form-control">
-                <label for="">sexe:</label>
-                <input type="radio" name="sexe" id="homme"  value="homme">
-                <label for="homme">Homme</label>
-                <input type="radio" name="sexe" id="femme" value="femme">
-                <label for="femme">Femme</label></br>
-                <label for="loisir">loisir</label>
-                <input type="text" name="loisir" id="loisir" minlength="1" class="form-control">
-                <label for="animaux">animaux de compagnie</label>
-                <input type="text" name="animaux" id="animaux" minlength="1" class="form-control"> 
-                <input type="submit" class="mt-3">
-            </form>
-        </div>
-    </body>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire d'inscription</title>
+  //ouai j'ai demander a chatgpt de faire se style la
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f8f9fa;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Formulaire d'inscription</h1>
+
+  <form action="traitement.php" method="POST">
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" required minlength="2" maxlength="50">
+
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Mot de passe :</label>
+    <input type="password" id="password" name="password" required minlength="6" maxlength="20">
+
+    <label>Sexe :</label>
+    <label><input type="radio" name="sexe" value="H" required> Homme</label>
+    <label><input type="radio" name="sexe" value="F" required> Femme</label>
+
+    <label for="ville">Ville :</label>
+    <select id="ville" name="ville" required>
+      <option value="">--Choisissez--</option>
+      <option value="Paris">Paris</option>
+      <option value="Lyon">Lyon</option>
+      <option value="Marseille">Marseille</option>
+    </select>
+
+    <label for="loisirs">Loisirs :</label>
+    <textarea id="loisirs" name="loisirs" rows="3" maxlength="200"></textarea>
+
+    <label for="animaux">Animaux de compagnie :</label>
+    <input type="text" id="animaux" name="animaux" maxlength="50">
+
+    <input type="submit" value="Envoyer">
+  </form>
+
+</body>
 </html>
